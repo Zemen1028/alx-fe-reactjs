@@ -1,14 +1,15 @@
+// MainContent.jsx
 import React from 'react';
 
 const MainContent = () => {
   return (
-    <main style={{ padding: '20px', backgroundColor: '#f4f4f4', borderRadius: '8px', margin: '20px auto', maxWidth: '800px' }}>
-      <h2 style={{ color: '#333' }}>Main Content</h2>
-      <p style={{ fontSize: '18px', color: '#555' }}>This is the main content area, where you can add any important information or articles.</p>
+    <main style={{ padding: '20px', backgroundColor: '#f9f9f9', borderRadius: '5px', margin: '10px' }}>
+      <h2 style={{ color: 'darkblue', fontSize: '22px', marginBottom: '15px' }}>Welcome to My Travel Blog</h2>
+      <p style={{ fontSize: '16px', lineHeight: '1.6', color: '#333' }}>
+        Explore the most beautiful cities around the world with me!
+      </p>
     </main>
   );
 };
 
 export default MainContent;
-
-
