@@ -1,10 +1,10 @@
 function Footer() {
     return (
-        <footer>
-            <p>© 2023 City Lovers</p>
-        </footer>
-    );
-}
+         <footer style={{ backgroundColor: '#333', color: 'white', textAlign: 'center', padding: '10px', position: 'fixed', bottom: '0', width: '100%' }}>
+      <p>&copy; 2025 My Favorite Cities</p>
+    </footer>
+  );
+};
 
 export default Footer;
 
