@@ -2,6 +2,20 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
+// src/App.jsx
+import React from 'react';
+import Counter from './components/Counter';
+
+const App = () => {
+  return (
+    <div>
+      <h1 style={{ textAlign: 'center', color: 'navy' }}>Simple Counter App</h1>
+      <Counter />
+    </div>
+  );
+};
+
+export default App;
 
 function App() {
   const [count, setCount] = useState(0)
