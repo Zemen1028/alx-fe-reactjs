@@ -3,11 +3,13 @@ import { Link } from 'react-router-dom';
 import useRecipeStore from '../store/recipeStore';
 
 const RecipeList = () => {
+  const recipes = useRecipeStore((state) => state.recipes);
   const filteredRecipes = useRecipeStore((state) => state.filteredRecipes);
   const favorites = useRecipeStore((state) => state.favorites);
   const addFavorite = useRecipeStore((state) => state.addFavorite);
   const removeFavorite = useRecipeStore((state) => state.removeFavorite);
-
+  const recipesToDisplay = filteredRecipes.length > 0 ? filteredRecipes : recipes;
+  
   return (
     <div>
       {filteredRecipes.map((recipe) => (
