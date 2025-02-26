@@ -14,6 +14,9 @@ import RecipeList from './components/RecipeList';
 import AddRecipeForm from './components/AddRecipeForm';
 import SearchBar from './components/SearchBar';
 import RecipeDetails from './components/RecipeDetails';
+import FavoritesList from './components/FavoritesList';
+import RecommendationsList from './components/RecommendationsList';
+
 function App() {
   const [count, setCount] = useState(0)
 
@@ -53,7 +56,7 @@ function App() {
       <Home/> {/*works fine here*/}
       <Routes>
           <Route  exact path= './' component={Home}/> 
-        <div style={{ padding: '20px' }}>
+       <div style={{ padding: '20px' }}>
         <h1>Recipe Sharing App</h1>
         <SearchBar />
         <AddRecipeForm />
@@ -61,6 +64,8 @@ function App() {
           <Route path="/" element={<RecipeList />} />
           <Route path="/recipe/:recipeId" element={<RecipeDetails />} />
         </Routes>
+        <FavoritesList />
+        <RecommendationsList />
       </div>
       </Routes>
     </Router>
