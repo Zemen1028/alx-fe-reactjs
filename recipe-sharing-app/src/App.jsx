@@ -3,11 +3,28 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 
+
+import React from 'react';
+import './App.css'; 
+import NavBar from './Components/NavBar';
+import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'; 
+import Home from './Components/pages/Home';
+import Projects from './Components/pages/Projects';
+import RecipeList from './components/RecipeList';
+import AddRecipeForm from './components/AddRecipeForm';
+import SearchBar from './components/SearchBar';
 function App() {
   const [count, setCount] = useState(0)
 
   return (
     <>
+ <div style={{ padding: '20px' }}>
+      <h1>Recipe Sharing App</h1>
+      <SearchBar />
+      <AddRecipeForm />
+      <RecipeList />
+    </div>
+      
       <div>
         <a href="https://vite.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />
@@ -28,7 +45,21 @@ function App() {
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
+
+ <Router>
+      {/* put anything that should be displayed to all pages */}
+      <NavBar/>
+      <Home/> {/*works fine here*/}
+      <Routes>
+          <Route  exact path= './' component={Home}/> 
+      </Routes>
+    </Router>
+
+
+      
     </>
+
+    
   )
 }
 
