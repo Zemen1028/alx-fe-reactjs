@@ -32,7 +32,7 @@ const RegistrationForm = () => {
         <input
           type="text"
           name="username"
-          value={formData.username}
+          value={formData.username} // Bind to username state
           onChange={handleChange}
         />
       </div>
@@ -41,7 +41,7 @@ const RegistrationForm = () => {
         <input
           type="email"
           name="email"
-          value={formData.email}
+          value={formData.email} // Bind to email state
           onChange={handleChange}
         />
       </div>
@@ -50,7 +50,7 @@ const RegistrationForm = () => {
         <input
           type="password"
           name="password"
-          value={formData.password}
+          value={formData.password} // Bind to password state
           onChange={handleChange}
         />
       </div>
