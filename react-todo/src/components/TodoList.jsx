@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 
+import { render, screen } from '@testing-library/react';
+import TodoList from '../components/TodoList';
+
 const TodoList = () => {
   const [todos, setTodos] = useState([
     { id: 1, text: "Learn React", completed: false },
@@ -31,6 +34,13 @@ const TodoList = () => {
     setTodos(todos.filter((todo) => todo.id !== id));
   };
 
+test('renders TodoList component', () => {
+  render(<TodoList />);
+  expect(screen.getByText('Todo List')).toBeInTheDocument();
+});
+
+
+  
   return (
     <div>
       <h1>Todo List</h1>
