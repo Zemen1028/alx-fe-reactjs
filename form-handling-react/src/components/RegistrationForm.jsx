@@ -17,7 +17,8 @@ const RegistrationForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!username || !email || !password) {
+ 
+    if (!email), if (!password), setErrors{
       alert("All fields are required!");
       return;
     }
