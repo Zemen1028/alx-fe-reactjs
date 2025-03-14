@@ -10,6 +10,10 @@ module.exports = {
       colors: {
         primary: '#3490dc',
         secondary: '#ffed4a',
+         backgroundColor: {
+        // Disable hover and focus variants for backgroundColor
+        hover: false,
+        focus: false,
       },
     },
   },
