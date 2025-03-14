@@ -4,9 +4,16 @@ module.exports = {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
-  darkMode: 'media', // or 'class'
+  darkMode: 'class', // Enable manual dark mode
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        primary: '#3490dc',
+        secondary: '#ffed4a',
+      },
+    },
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/forms'), // Example plugin
+  ],
 }
