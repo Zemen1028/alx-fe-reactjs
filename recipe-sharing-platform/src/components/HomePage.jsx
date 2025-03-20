@@ -51,6 +51,18 @@ const HomePage = () => {
         ))}
       </div>
     </div>
+<div className="container mx-auto p-4">
+      <div className="flex justify-between items-center mb-8">
+        <h1 className="text-3xl font-bold">Recipe Sharing Platform</h1>
+        <Link
+          to="/add-recipe"
+          className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors duration-300"
+        >
+          Add Recipe
+        </Link>
+      </div>
+      {/* Rest of the HomePage content */}
+    </div>
   );
 };
 
