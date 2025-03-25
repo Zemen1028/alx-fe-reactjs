@@ -1,3 +1,6 @@
+"engines": {
+  "node": ">=16.x"
+}
 {
   "name": "github-user-search",
   "private": true,
