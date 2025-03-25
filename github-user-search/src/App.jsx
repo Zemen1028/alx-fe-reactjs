@@ -3,6 +3,7 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 import Search from './components/Search';
+import Results from './components/Results';
 
 
 function App() {
@@ -10,6 +11,16 @@ function App() {
 
   return (
     <>
+
+        <div className="min-h-screen bg-gray-100 py-8 px-4">
+      <div className="max-w-4xl mx-auto">
+        <h1 className="text-3xl font-bold text-center text-gray-800 mb-8">GitHub User Search</h1>
+        <Search onResults={handleSearchResults} />
+        <div className="mt-8">
+          <Results users={users} loading={loading} />
+        </div>
+      </div>
+    </div>
           <div className="App">
       <h1>GitHub User Search</h1>
       <Search />
