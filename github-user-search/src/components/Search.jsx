@@ -17,7 +17,10 @@ const Search = () => {
   const [hasMore, setHasMore] = useState(false);
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
+    // Explicitly using e.target.value
+    const value = e.target.value;
+    // Explicitly using e.target.name
+    const name = e.target.name;
     setSearchParams(prev => ({ ...prev, [name]: value }));
   };
 
@@ -68,7 +71,7 @@ const Search = () => {
                 type="text"
                 name="username"
                 value={searchParams.username}
-                onChange={handleInputChange}
+                onChange={(e) => setSearchParams(prev => ({ ...prev, username: e.target.value }))}
                 placeholder="e.g. octocat"
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
@@ -84,7 +87,7 @@ const Search = () => {
                   type="text"
                   name="location"
                   value={searchParams.location}
-                  onChange={handleInputChange}
+                  onChange={(e) => setSearchParams(prev => ({ ...prev, location: e.target.value }))}
                   placeholder="e.g. San Francisco"
                   className="w-full pl-10 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
@@ -101,7 +104,7 @@ const Search = () => {
                   type="number"
                   name="minRepos"
                   value={searchParams.minRepos}
-                  onChange={handleInputChange}
+                  onChange={(e) => setSearchParams(prev => ({ ...prev, minRepos: e.target.value }))}
                   placeholder="e.g. 10"
                   min="0"
                   className="w-full pl-10 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -119,7 +122,7 @@ const Search = () => {
                   type="number"
                   name="minFollowers"
                   value={searchParams.minFollowers}
-                  onChange={handleInputChange}
+                  onChange={(e) => setSearchParams(prev => ({ ...prev, minFollowers: e.target.value }))}
                   placeholder="e.g. 100"
                   min="0"
                   className="w-full pl-10 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -157,7 +160,6 @@ const Search = () => {
 
       {users.length > 0 && (
         <div className="space-y-4">
-          {/* Using map to iterate through users array */}
           {users.map(user => (
             <div key={user.id} className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow">
               <div className="p-6">
