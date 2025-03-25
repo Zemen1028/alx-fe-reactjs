@@ -1,106 +1,69 @@
-// components/Search.js
 import { useState } from 'react';
 import githubService from '../services/githubService';
+import UserCard from './UserCard';
+import { FiSearch, FiLoader, FiAlertCircle } from 'react-icons/fi';
 
-const Search = ({ onResults }) => {
-  const [searchParams, setSearchParams] = useState({
-    username: '',
-    location: '',
-    minRepos: '',
-    language: '',
-    followers: ''
-  });
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setSearchParams(prev => ({ ...prev, [name]: value }));
-  };
+const Search = () => {
+  const [username, setUsername] = useState('');
+  const [userData, setUserData] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!username.trim()) return;
+    
+    setLoading(true);
+    setError(null);
+    
     try {
-      const results = await githubService.advancedSearch(searchParams);
-      onResults(results);
-    } catch (error) {
-      console.error('Search error:', error);
+      const data = await githubService.fetchUserData(username);
+      setUserData(data);
+    } catch (err) {
+      setError('Looks like we can\'t find the user');
+      setUserData(null);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div className="bg-white p-6 rounded-lg shadow-md">
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <label htmlFor="username" className="block text-sm font-medium text-gray-700">
-              Username
-            </label>
-            <input
-              type="text"
-              id="username"
-              name="username"
-              value={searchParams.username}
-              onChange={handleInputChange}
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2 border"
-              placeholder="e.g. octocat"
-            />
-          </div>
-
-          <div>
-            <label htmlFor="location" className="block text-sm font-medium text-gray-700">
-              Location
-            </label>
-            <input
-              type="text"
-              id="location"
-              name="location"
-              value={searchParams.location}
-              onChange={handleInputChange}
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2 border"
-              placeholder="e.g. San Francisco"
-            />
-          </div>
-
-          <div>
-            <label htmlFor="minRepos" className="block text-sm font-medium text-gray-700">
-              Minimum Repositories
-            </label>
-            <input
-              type="number"
-              id="minRepos"
-              name="minRepos"
-              value={searchParams.minRepos}
-              onChange={handleInputChange}
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2 border"
-              placeholder="e.g. 10"
-              min="0"
-            />
-          </div>
-
-          <div>
-            <label htmlFor="language" className="block text-sm font-medium text-gray-700">
-              Primary Language
-            </label>
-            <input
-              type="text"
-              id="language"
-              name="language"
-              value={searchParams.language}
-              onChange={handleInputChange}
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2 border"
-              placeholder="e.g. JavaScript"
-            />
-          </div>
-        </div>
-
-        <div className="flex justify-end">
+    <div className="max-w-md mx-auto p-4">
+      <form onSubmit={handleSubmit} className="mb-6">
+        <div className="flex gap-2">
+          <input
+            type="text"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            placeholder="Enter GitHub username"
+            className="flex-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
           <button
             type="submit"
-            className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            disabled={loading}
+            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:bg-blue-400 flex items-center gap-2"
           >
+            {loading ? <FiLoader className="animate-spin" /> : <FiSearch />}
             Search
           </button>
         </div>
       </form>
+
+      {loading && (
+        <div className="flex items-center justify-center p-8 text-blue-600">
+          <FiLoader className="animate-spin mr-2" size={24} />
+          <span>Loading...</span>
+        </div>
+      )}
+
+      {error && (
+        <div className="flex items-center justify-center p-8 text-red-600">
+          <FiAlertCircle className="mr-2" size={24} />
+          <span>{error}</span>
+        </div>
+      )}
+
+      {userData && <UserCard user={userData} />}
     </div>
   );
 };
