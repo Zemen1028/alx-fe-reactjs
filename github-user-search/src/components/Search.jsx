@@ -4,7 +4,7 @@ import { FiSearch, FiLoader, FiAlertCircle } from 'react-icons/fi';
 
 const Search = () => {
   const [username, setUsername] = useState('');
-  const [userData, setUserData] = useState(null);
+  const [users, setUsers] = useState([]); // Changed from userData to users array
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -16,11 +16,12 @@ const Search = () => {
     setError(null);
     
     try {
+      // Assuming githubService.fetchUserData returns an array of users
       const data = await githubService.fetchUserData(username);
-      setUserData(data);
+      setUsers(Array.isArray(data) ? data : [data]); // Ensure we have an array
     } catch (err) {
       setError("Looks like we cant find the user");
-      setUserData(null);
+      setUsers([]);
     } finally {
       setLoading(false);
     }
@@ -62,19 +63,32 @@ const Search = () => {
         </div>
       )}
 
-      {userData && (
-        <div className="bg-white rounded-lg shadow-md overflow-hidden p-6">
-          <div className="flex items-center gap-6 mb-4">
-            <img
-              src={userData.avatar_url}
-              alt={`${userData.login}'s avatar`}
-              className="w-20 h-20 rounded-full border-2 border-blue-200"
-            />
-            <div>
-              <h2 className="text-xl font-bold">{userData.name || userData.login}</h2>
-              <p className="text-gray-600">@{userData.login}</p>
+      {/* Using map to display multiple users */}
+      {users.length > 0 && (
+        <div className="space-y-4">
+          {users.map(user => (
+            <div key={user.id} className="bg-white rounded-lg shadow-md overflow-hidden p-6">
+              <div className="flex items-center gap-6 mb-4">
+                <img
+                  src={user.avatar_url}
+                  alt={`${user.login}'s avatar`}
+                  className="w-20 h-20 rounded-full border-2 border-blue-200"
+                />
+                <div>
+                  <h2 className="text-xl font-bold">{user.name || user.login}</h2>
+                  <p className="text-gray-600">@{user.login}</p>
+                  <a 
+                    href={user.html_url} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="text-blue-600 hover:underline text-sm"
+                  >
+                    View Profile
+                  </a>
+                </div>
+              </div>
             </div>
-          </div>
+          ))}
         </div>
       )}
     </div>
