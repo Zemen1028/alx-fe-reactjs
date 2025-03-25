@@ -1,25 +1,34 @@
 import { useState } from "react";
 
-const Search = ({ onSearch }) => {
+const Search = () => {
   const [query, setQuery] = useState("");
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!query.trim()) return;
+    setLoading(true);
+    setError("");
+    setUser(null);
 
-    const foundUser = onSearch(query); // Assume this returns a user or null
-
-    if (!foundUser) {
+    try {
+      const response = await fetch(`https://api.github.com/users/${query}`);
+      if (!response.ok) {
+        throw new Error("User not found");
+      }
+      const data = await response.json();
+      setUser(data);
+    } catch (err) {
       setError("Looks like we can't find the user");
-    } else {
-      setError("");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit} className="flex gap-2">
+    <div className="max-w-md mx-auto">
+      <form onSubmit={handleSubmit} className="flex gap-2 mb-4">
         <input
           type="text"
           value={query}
@@ -31,7 +40,20 @@ const Search = ({ onSearch }) => {
           Search
         </button>
       </form>
-      {error && <p className="text-red-500 mt-2">{error}</p>}
+
+      {loading && <p>Loading...</p>}
+
+      {error && <p className="text-red-500">{error}</p>}
+
+      {user && (
+        <div className="border p-4 rounded shadow-md">
+          <img src={user.avatar_url} alt={user.login} className="w-16 h-16 rounded-full mb-2" />
+          <p className="font-bold">{user.login}</p>
+          <a href={user.html_url} target="_blank" rel="noopener noreferrer" className="text-blue-500">
+            View Profile
+          </a>
+        </div>
+      )}
     </div>
   );
 };
