@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import githubService from '../services/githubService';
-import UserCard from './UserCard';
 import { FiSearch, FiLoader, FiAlertCircle } from 'react-icons/fi';
 
 const Search = () => {
@@ -20,7 +19,7 @@ const Search = () => {
       const data = await githubService.fetchUserData(username);
       setUserData(data);
     } catch (err) {
-      setError('Looks like we can\'t find the user');
+      setError("Looks like we cant find the user");
       setUserData(null);
     } finally {
       setLoading(false);
@@ -63,7 +62,21 @@ const Search = () => {
         </div>
       )}
 
-      {userData && <UserCard user={userData} />}
+      {userData && (
+        <div className="bg-white rounded-lg shadow-md overflow-hidden p-6">
+          <div className="flex items-center gap-6 mb-4">
+            <img
+              src={userData.avatar_url}
+              alt={`${userData.login}'s avatar`}
+              className="w-20 h-20 rounded-full border-2 border-blue-200"
+            />
+            <div>
+              <h2 className="text-xl font-bold">{userData.name || userData.login}</h2>
+              <p className="text-gray-600">@{userData.login}</p>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
