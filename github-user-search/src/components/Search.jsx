@@ -11,7 +11,11 @@ const Search = () => {
     setLoading(true);
     setError("");
     setUser(null);
-
+    const result = await onSearch(query); // Assuming onSearch returns a result or null
+  if (!result) {
+      setError("Looks like we can't find the user");
+    }
+  };
     try {
       const response = await fetch(`https://api.github.com/users/${query}`);
       if (!response.ok) {
