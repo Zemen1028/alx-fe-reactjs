@@ -25,6 +25,12 @@ const Search = () => {
       setLoading(false);
     }
   };
+    if (!foundUser) {
+      setError("Looks like we can't find the user");
+    } else {
+      setError("");
+    }
+  };
 
   return (
     <div className="search-container">
